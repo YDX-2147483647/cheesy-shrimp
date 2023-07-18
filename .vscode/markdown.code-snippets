@@ -1,0 +1,11 @@
+{
+    "元数据": {
+        "scope": "markdown",
+        "prefix": "meta",
+        "body": [
+            "> :fontawesome-regular-face-grin: ${1:独角鬼王}",
+            ">",
+            "> :material-clock-edit-outline: ${2:2023年6月11日 16:43:33}",
+        ]
+    }
+}

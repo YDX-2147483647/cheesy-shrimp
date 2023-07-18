@@ -1,0 +1,27 @@
+# https://squidfunk.github.io/mkdocs-material/publishing-your-site/#with-github-actions
+name: deploy
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.vscode/**'
+      - '.github/**'
+      - '.pre-commit-config.yaml'
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+          cache: pip
+          cache-dependency-path: justfile
+      - uses: extractions/setup-just@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: just bootstrap
+      - run: mkdocs gh-deploy --force

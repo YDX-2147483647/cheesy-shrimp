@@ -1,0 +1,38 @@
+site_name: 组织部芝士虾
+site_description: 2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
+site_url: https://bitnp.github.io/cheesy-shrimp/
+repo_url: https://github.com/BITNP/cheesy-shrimp
+repo_name: BITNP/cheesy-shrimp
+edit_uri: blob/main/docs/
+
+theme:
+  name: material
+  palette:
+    primary: amber
+  language: zh
+  features:
+    - navigation.footer
+    - navigation.instant
+    - navigation.top
+    - content.action.view
+    - content.action.edit
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds: {}
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.keys
+  - pymdownx.superfences
+  - mdx_truly_sane_lists
