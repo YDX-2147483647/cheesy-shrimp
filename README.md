@@ -1,5 +1,7 @@
 # 组织部芝士虾
 
+[![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://squidfunk.github.io/mkdocs-material/)
+
 2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
 
 ![](docs/assets/Laughing_man.svg)
