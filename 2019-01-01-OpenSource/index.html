@@ -1,0 +1,1275 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。">
+      
+      
+      
+        <link rel="canonical" href="https://bitnp.github.io/cheesy-shrimp/2019-01-01-OpenSource/">
+      
+      
+        <link rel="prev" href="../2019-01-01-Legacy_BIOS/">
+      
+      
+        <link rel="next" href="../2019-01-01-RAID/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>浅谈开源 - 组织部芝士虾</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#浅谈开源" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="组织部芝士虾" class="md-header__button md-logo" aria-label="组织部芝士虾" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            组织部芝士虾
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              浅谈开源
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="切换到亮色"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到亮色" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="切换到暗色"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到暗色" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="indigo"  aria-label="自动设置亮暗"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="自动设置亮暗" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BITNP/cheesy-shrimp" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    BITNP/cheesy-shrimp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="组织部芝士虾" class="md-nav__button md-logo" aria-label="组织部芝士虾" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    组织部芝士虾
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BITNP/cheesy-shrimp" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    BITNP/cheesy-shrimp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组织部芝士虾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-FileSystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FileSystem &amp;&amp; Partition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-Legacy_BIOS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2019 01 01 Legacy BIOS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    浅谈开源
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    浅谈开源
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Free-Open-Source-Software" class="md-nav__link">
+    <span class="md-ellipsis">
+      Free Open-Source Software
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#开源协议" class="md-nav__link">
+    <span class="md-ellipsis">
+      开源协议
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-RAID/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RAID和Storage Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-UEFI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UEFI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-Windows-Browsers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows浏览器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows简史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-rEFInd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rEFInd实用攻略
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-01-01-remove-Inventor_LP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    干死Inventor Language Pack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-11-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows 上 Path 的长度
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-12-history/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell 历史记录
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-13-ascii/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ASCII 艺术
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-15-ghost-in-the-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ghost in the Shell —— Fork Bomb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-16-antigravity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Antigravity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-17-simple-is-better-than-complex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simple is better than complex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-18-996-icu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    996 ICU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-20-meta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    元
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-21-four/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Four
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-22-assert/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    一般 python 开发者都不用的冷特性——Optimize
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-22-gender/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    性别
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-22-pypackages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PEP 582 is REJECTED
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-22-trivia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    冷知识
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-23-birthday/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    刘慈欣
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-26-space/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    空格、空格和空格
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-28-rust-quote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rust 引言
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-29-https/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTPS 仅仅加密
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-06-30-gitignore/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitIgnore.IO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-03-avenues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    大道
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-05-operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-06-glog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-08-translucentb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TranslucenTB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-09-latexmk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Latexmk 钩子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-12-f-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    F-string 嵌套
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-07-27-abstraction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    抽象真可能引入负成本
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Free-Open-Source-Software" class="md-nav__link">
+    <span class="md-ellipsis">
+      Free Open-Source Software
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#开源协议" class="md-nav__link">
+    <span class="md-ellipsis">
+      开源协议
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/BITNP/cheesy-shrimp/blob/main/docs/2019-01-01-OpenSource.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/BITNP/cheesy-shrimp/raw/main/docs/2019-01-01-OpenSource.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="浅谈开源">浅谈开源<a class="headerlink" href="#浅谈开源" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M464 256a208 208 0 1 0-416 0 208 208 0 1 0 416 0M0 256a256 256 0 1 1 512 0 256 256 0 1 1-512 0m349.5 52.4c18.7-4.4 35.9 12 25.5 28.1-24.6 38.1-68.7 63.5-119.1 63.5s-94.5-25.4-119.1-63.5c-10.4-16.1 6.8-32.5 25.5-28.1 28.9 6.8 60.5 10.5 93.6 10.5s64.7-3.7 93.6-10.5M144.4 208a32 32 0 1 1 64 0 32 32 0 1 1-64 0m192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64"/></svg></span> everything411 and LoveCatC</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg></span> 2019年1月1日 0:00:00</p>
+</blockquote>
+<p>近一段时间，开源算是一个比较火的概念。方舟编译器的开源、木兰宽松许可证等等，都让<strong>开源</strong>这个名词走进了大众的视野。这篇文章会简单的谈谈开源软件以及和它相关的那些概念、故事。</p>
+<h2 id="Free-Open-Source-Software">Free Open-Source Software<a class="headerlink" href="#Free-Open-Source-Software" title="Permanent link">&para;</a></h2>
+<p>让我们先从一个词说起，<strong>Free Open-Source Software</strong>。这个词常常被人用起，但有经常被用错。首先正如Wikipedia给出的说明，这个词是一个复合型术语——它是<strong>Free Software</strong>  和 <strong>Open-Source Software</strong>拼接到一起而成的。</p>
+<blockquote>
+<p>"<strong>Free and open-source software</strong>" (<strong>FOSS</strong>) is an umbrella term for software that is simultaneously considered both <strong>Free software</strong> and <strong>open-source software</strong>.</p>
+</blockquote>
+<p>其中Open-Source是我们今天这篇文章的主角。最浅显的说，开源指的就是将程序的源代码公之于众，大家愿意把这份代码拿去使用、学习甚至改造都可以。</p>
+<p>可Free Software又是个啥？可能是这个概念传入国内时翻译的问题，很多人都将这个词中的Free理解为免费之意——开源软件又不需要付费，那Free不就是免费的意思嘛？事实上，这个Free并不是Free Beer的Free，而是Free Speech的那个Free（a matter of liberty not price）。没错，Free Software通常指软件的证书（License）中包含了使用者“自由”（liberties）的那些软件。应该说，Free Software和Open-Source Software之间有着千丝万缕的联系，但它们又不尽相同。按照Free Software Foundation的说法，Free背后代表的是一种对使用者自由的尊重，而Open-Source则只是开发者希望不断完善自身代码的一种手段（大雾）。</p>
+<blockquote>
+<p>"The two terms describe almost the same category of software, but they stand for views based on fundamentally different values. Open-source is a development methodology; free software is a social movement. For the free-software movement, free software is an ethical imperative, essential respect for the users' freedom. By contrast, the philosophy of open-source considers issues in terms of how to make software “better”—in a practical sense only."</p>
+</blockquote>
+<p>说一千道一万，虽然Free和Open-Source彼此之间有着超多的相通之处，但还是要有所区分的。Free Software的概念最早由美国人Richard Stallman在1986年提出，并且在前一年，他就成立了非营利性组织FSF（Free Software Foundation）。最早的时候对于Free Software的定义只有两大自由，但是经过不断修改，现在的Free Software已经有了四大自由：</p>
+<ul>
+<li>The freedom to run the program as you wish, for any purpose (freedom 0).</li>
+<li>The freedom to study how the program works, and change it so it does your computing as you wish (freedom 1). Access to the source code is a precondition for this.</li>
+<li>The freedom to redistribute copies so you can help your neighbor (freedom 2).</li>
+<li>The freedom to distribute copies of your modified versions to others (freedom 3). By doing this you can give the whole community a chance to benefit from your changes. Access to the source code is a precondition for this.</li>
+</ul>
+<blockquote>
+<p>此外，the Four Freedoms中Freedom 0反而是最后一个被加入的，但是人们认为它很重要，所以就成为了Freedom 0。XD</p>
+</blockquote>
+<p>事实上，Richard的这一系列操作都是在当时的一大运动<strong>Free Software Movement</strong>背景下展开的。这是早期计算机发展历史上的一个有着深远意义的社会性运动。</p>
+<p>这一事件的大概背景是，在上世纪六十年代后期之前，计算机的使用还是处于一个小众的圈子内，大多数都是专门的研究机构或者高校。同时当时还没有一个普适性的操作系统出现，因而在那个时期大家都会将自己程序的源码进行分享。这样既方便学术上的交流，还可以改进自己的程序。更重要的是，本身小众的圈子加上局限的使用环境，即使将程序源码分享出去也不会造成大规模的随意使用。然而形势在60年代末发生了变化。随着操作系统和编程语言的发展，程序的移植性空前提高；同时由于要考虑移植、适配的问题，软件的编写成本要比之前的机器码时代更高。此外，这一时期硬件生产商的优势地位也在丧失。在之前，硬件生产商在提供机器时会提供相应的配套软件，但随着发展这种配套的软件无法满足顾客的需求，而更多的软件提供商则制作出了丰富的软件资源。1969年美国政府将绑定软件行为定性为不正当竞争，这个原本由硬件生产商占有的市场就被放给了软件制作商，这刺激了软件商业化的发展，一部分软件变得需要商业授权。之后70年代软件的版权化和80年代Unix系统停止发行免费版本加剧了软件商业化的趋势。软件商业化带来的必然结果就是——软件开发商们不再愿意公开自己程序的源码，而是只提供最终编译出的可执行文件。而Richard就是在这种大背景下号召展开了软件自由化的运动。</p>
+<p>事实上，在FSF问世之前，Richard就主持发起了一个影响深远的项目——GNU（GNU’s Not Unix）。一般也认为，这个项目的发起就代表着<strong>Free Software Movement</strong>的正式开端。这个项目致力于<strong>ensure that the entire software of a computer grants its users all freedom rights</strong>。为了搭建一个这样的系统，Richard需要从头开始制作Compiler、Kernel甚至于Editor，于是就有了GCC、Linux以及Emacs。当然这些都是后话了。</p>
+<p>说回Open-Source Software。Open-Source这个定义是由另一个组织发起的，这个组织就是OSI(Open Source Initiative)。这个组织基本就和Richard没有什么实质关系（当然精神是一脉相承的），成立于1998年。事实上，FSF和OSI（或者说这两大组织各自的定义）的初衷、目的是不同的。</p>
+<blockquote>
+<p>"Dump the moralizing and confrontational attitude that had been associated with 'free software'" and instead promote open source ideas on "pragmatic, business-case grounds."</p>
+</blockquote>
+<p>OSI创始人之一Michael的原话中鲜明的表现出了对于前辈Richard理念的否定，无怪后来FSF和OSI对掐，正如上文所提，二者理念确实有诸多不同。</p>
+<blockquote>
+<p>有趣的是，在Wiki上，FSF被称作<strong>non-profit corporation</strong>，而OSI被称作<strong>public-benefit corporation</strong>。二者的区别在于<strong>Ownership Factor</strong>。区别在于，nonprofit corporation是致力于服务大众的，不属于任何人，也不会盈利；而所谓的public-benefit corporation事实上是有Leadership，并且可以盈利的，只是他们的目标更为“宏伟”一些，会将一部分收入反馈社会。</p>
+</blockquote>
+<p>扯了这么多，那么Open-Source Software的定义究竟是怎样的呢？</p>
+<blockquote>
+<p>Open source doesn't just mean access to the source code. The distribution terms of open-source software must comply with the following criteria:</p>
+<ol>
+<li><strong>Free Redistribution</strong> The license shall not restrict any party from selling or giving away the software as a component of an aggregate software distribution containing programs from several different sources. The license shall not require a royalty or other fee for such sale.</li>
+<li><strong>Source Code</strong> The program must include source code, and must allow distribution in source code as well as compiled form. Where some form of a product is not distributed with source code, there must be a well-publicized means of obtaining the source code for no more than a reasonable reproduction cost preferably, downloading via the Internet without charge. The source code must be the preferred form in which a programmer would modify the program. Deliberately obfuscated source code is not allowed. Intermediate forms such as the output of a preprocessor or translator are not allowed.</li>
+<li><strong>Derived Works</strong> The license must allow modifications and derived works, and ==must allow them to be distributed under the same terms as the license of the original software.==</li>
+<li><strong>Integrity of The Author's Source Code</strong> The license may restrict source-code from being distributed in modified form only if the license allows the distribution of "patch files" with the source code for the purpose of modifying the program at build time. The license must explicitly permit distribution of software built from modified source code. The license may require derived works to carry a different name or version number from the original software.</li>
+<li><strong>No Discrimination Against Persons or Groups</strong> The license must not discriminate against any person or group of persons.</li>
+<li><strong>No Discrimination Against Fields of Endeavor</strong> The license must not restrict anyone from making use of the program in a specific field of endeavor. For example, it may not restrict the program from being used in a business, or from being used for genetic research.</li>
+<li><strong>Distribution of License</strong> The rights attached to the program must apply to all to whom the program is redistributed without the need for execution of an additional license by those parties.</li>
+<li><strong>License Must Not Be Specific to a Product</strong> The rights attached to the program must not depend on the program's being part of a particular software distribution. If the program is extracted from that distribution and used or distributed within the terms of the program's license, all parties to whom the program is redistributed should have the same rights as those that are granted in conjunction with the original software distribution.</li>
+<li><strong>License Must Not Restrict Other Software</strong> The license must not place restrictions on other software that is distributed along with the licensed software. For example, the license must not insist that all other programs distributed on the same medium must be open-source software.</li>
+<li><strong>License Must Be Technology-Neutral</strong> No provision of the license may be predicated on any individual technology or style of interface.</li>
+</ol>
+</blockquote>
+<p>其实乍看之下Open-Source在大多数方面和Free非常相似，只是在很多细节处加了完善。但仔细推敲之下，不难发现Open-Source最大的特点之一就是其传染性。简单说，Open-Source基本要求基于原本Open-Source软件开发的Redistribution版本也要保证Open-Source。这一点我们在接下来提到的几大著名开源协议中会体现的更加明显和详细。</p>
+<p>总的来说，Free Software这一概念出现的比Open-Source Software要早。二者都是Free Software Movement这一影响深远的运动下的产物——或者说，都是这一思想的继承者，只是他们对这一思想有着各自的理解。（突然想到Metal Gear，怀念啊）这也使得两大组织之间并不算和谐，虽然他们坚持的事物在笔者看来并没有什么区别。从这两大概念，乃至他们背后的组织的种种对比，我们都可以看出，Open-Source的出发点要比Free Software更加现实，可能正是因此，目前Open-Source的影响要比Free Software广得多。</p>
+<p>大人，时代变了。</p>
+<h2 id="开源协议">开源协议<a class="headerlink" href="#开源协议" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>An <strong>open-source license</strong> is a type of license for computer software and other products that allows the source code, blueprint or design to be used, modified and/or shared under defined terms and conditions.</p>
+</blockquote>
+<p>开源协议其实就是一种约定，如果一个软件使用了开源协议，这就意味着软件开发者和使用者的行为都要遵守协议的规定。类似的Software License其实很多，例如我们上文介绍的Free Software其实也有自己的License。著名的开源协议有：<strong>Apache License    BSD License GNU General Public License  MIT License Mozilla Public License  GUN Lesser General Public License</strong>等等。对于这六个最常用的开源协议，有一个很方便进行选择的图表。</p>
+<p>但一个恐怖的事实是现在已经有几十种被OSI认可的开源协议，所以在之前选择适合的开源协议对程序员来说这真的是一个极大的挑战。不过现在已经有了专门的分类网站，例如<a href="https://choosealicense.com/">Choose A License</a>，可以让你根据自己的需要很快找到适合的协议。</p>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<p><a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">Wikipedia-Free Open-Source Software and its RELATED PAGES :-)</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2019-01-01-Legacy_BIOS/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2019 01 01 Legacy BIOS">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                2019 01 01 Legacy BIOS
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2019-01-01-RAID/" class="md-footer__link md-footer__link--next" aria-label="下一页: RAID和Storage Configuration">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                RAID和Storage Configuration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.footer", "navigation.instant", "navigation.top", "content.action.view", "content.action.edit"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
