@@ -2,6 +2,10 @@
 
 [![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://squidfunk.github.io/mkdocs-material/)
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/BITNP/cheesy-shrimp/main.svg)](https://results.pre-commit.ci/latest/github/BITNP/cheesy-shrimp/main)
+[![deploy](https://github.com/BITNP/cheesy-shrimp/actions/workflows/deploy.yml/badge.svg)](https://bitnp.github.io/cheesy-shrimp/)
+[![Vercel Status](https://img.shields.io/github/deployments/everything411/cheesy-shrimp/production?label=vercel)](https://vercel.com/everything411/cheesy-shrimp/deployments)
+
 源于2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
 
 ![](docs/assets/Laughing_man.svg)
