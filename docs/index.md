@@ -1,6 +1,6 @@
 # 组织部芝士虾
 
-2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
+源于2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
 
 <figure markdown='span'>
     ![](assets/Laughing_man.svg){ style="margin: auto; width: 60%;" }

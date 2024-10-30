@@ -1,6 +1,6 @@
 site_name: 组织部芝士虾
-site_description: 2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
-site_url: https://bitnp.github.io/cheesy-shrimp/
+site_description: 源于2023年夏在QQ群“2022网协组织部”发生的 stand alone complex 现象。
+site_url: https://cheesy-shrimp.bitnp.net/
 repo_url: https://github.com/BITNP/cheesy-shrimp
 repo_name: BITNP/cheesy-shrimp
 edit_uri: blob/main/docs/
@@ -52,3 +52,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.superfences
   - mdx_truly_sane_lists
+
+plugins:
+  - search
+  - rss
