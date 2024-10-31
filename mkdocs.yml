@@ -55,5 +55,8 @@ markdown_extensions:
 
 plugins:
   - search
-  - rss
+  - rss:
+      enabled: !ENV [CI, false]
   - awesome-pages
+  - privacy:
+      enabled: !ENV [CI, false]
