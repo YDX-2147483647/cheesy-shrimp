@@ -56,3 +56,4 @@ markdown_extensions:
 plugins:
   - search
   - rss
+  - awesome-pages
