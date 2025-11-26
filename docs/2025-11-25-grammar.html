@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫头鹰文法</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
+    <style>
+        /* --- 基础设置 --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* 防止整页滚动 */
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        /* --- 整体网格布局 --- */
+        .app-container {
+            display: grid;
+            grid-template-rows: auto 1fr; /* 顶部自适应，底部填满 */
+            grid-template-columns: 400px 1fr; /* 左侧稍宽以容纳复杂按钮，右侧自适应 */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* --- 顶部通栏 (标题 + 输入) --- */
+        .top-bar {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .brand {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            max-width: 900px;
+        }
+
+        input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 500px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            background: #4CAF50;
+            color: white;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        button:hover { background: #45a049; }
+        button.secondary { background: #2196F3; }
+        button.secondary:hover { background: #1976D2; }
+
+        /* --- 左侧边栏 (信息显示) --- */
+        .sidebar {
+            background: #fafafa;
+            border-right: 1px solid #ddd;
+            padding: 15px;
+            overflow-y: auto; /* 内容多时内部滚动 */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            color: #444;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        /* 文法规则微缩 */
+        .grammar-rules p {
+            margin: 3px 0;
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+        }
+
+        /* 语义结果卡片优化 */
+        .semantic-result {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .body-part {
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            border-radius: 4px;
+            border: 1px solid;
+        }
+        .head { background: #e3f2fd; border-color: #90caf9; }
+        .body { background: #f3e5f5; border-color: #ce93d8; }
+
+        .part-label { font-size: 11px; color: #555; margin-bottom: 2px; }
+        .part-value { font-size: 16px; font-weight: bold; color: #d32f2f; margin: 2px 0; }
+        .part-source { font-size: 11px; color: #888; }
+
+        #semanticExplanation {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+            background: #fff8e1;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        #semanticExplanation ul { margin: 5px 0; padding-left: 20px; }
+
+        /* 推导过程列表 */
+        #derivation {
+            font-size: 12px;
+            max-height: 200px; /* 限制高度，留给示例按钮 */
+            overflow-y: auto;
+        }
+        #derivation ol { padding-left: 25px; margin: 0; }
+        #derivation li { margin-bottom: 4px; color: #555; }
+
+        /* 状态消息 */
+        .error { color: #d32f2f; background: #ffebee; padding: 8px; border-radius: 4px; font-size: 12px; }
+        .success { color: #2e7d32; background: #e8f5e8; padding: 8px; border-radius: 4px; font-size: 12px; }
+
+        /* 示例按钮网格 - 针对长文本优化 */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 改为单列，防止长文本挤压 */
+            gap: 6px;
+        }
+        .example-btn {
+            font-size: 11px;
+            padding: 6px;
+            background: #ff9800;
+            text-align: left;
+            white-space: normal; /* 允许换行 */
+            line-height: 1.2;
+            word-break: break-all;
+        }
+        .example-btn:hover { background: #fb8c00; }
+
+        .category-title {
+            font-weight: bold;
+            font-size: 12px;
+            margin: 8px 0 4px 0;
+            color: #555;
+        }
+
+        /* --- 右侧主区域 (可视化) --- */
+        .main-panel {
+            position: relative;
+            background: white;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #syntaxTree {
+            width: 100%;
+            height: 100%; /* 填满剩余空间 */
+            border: none;
+        }
+
+        .vis-label {
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 5;
+            pointer-events: none;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        div.vis-network div.vis-tooltip {
+            z-index: 100; /* 保证提示框在上层 */
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部栏 -->
+        <div class="top-bar">
+            <div class="brand">猫头鹰文法</div>
+            <div class="input-group">
+                <input type="text" id="inputText" placeholder="输入生物合成词，如：猫头鹰头猫" value="猫头鹰头猫">
+                <button onclick="parseInput()">解析</button>
+                <button onclick="showRandomExample()" class="secondary">🎲 随机测试</button>
+                <button onclick="showAllExamples()" class="secondary">📚 复杂示例库</button>
+            </div>
+        </div>
+
+        <!-- 左侧边栏 -->
+        <div class="sidebar">
+            <!-- 1. 文法规则 -->
+            <div class="card grammar-rules">
+                <h3>📜 规则定义</h3>
+                <p><strong>N → B | N H B</strong> (左结合)</p>
+                <p><strong>B → "猫" | "鹰" | "猫头鹰"</strong></p>
+                <p><strong>H → "头"</strong></p>
+                <p style="margin-top:5px; color:#1976D2">语义：头=左.头, 身=右.身</p>
+            </div>
+
+            <!-- 2. 消息与示例区域 -->
+            <div id="message"></div>
+
+            <!-- 3. 语义分析结果 -->
+            <div class="card" id="semanticResult" style="display: none;">
+                <h3>🧬 语义分析结果</h3>
+                <div class="semantic-result">
+                    <div class="body-part head">
+                        <div class="part-label">最终头部</div>
+                        <div class="part-value" id="headValue"></div>
+                        <div class="part-source">源自: <span id="headSource"></span></div>
+                    </div>
+                    <div class="body-part body">
+                        <div class="part-label">最终身体</div>
+                        <div class="part-value" id="bodyValue"></div>
+                        <div class="part-source">源自: <span id="bodySource"></span></div>
+                    </div>
+                </div>
+                <div id="semanticExplanation"></div>
+            </div>
+
+            <!-- 4. 推导过程 -->
+            <div class="card">
+                <h3>📝 推导过程</h3>
+                <div id="derivation"></div>
+            </div>
+        </div>
+
+        <!-- 右侧可视化区域 -->
+        <div class="main-panel">
+            <div class="vis-label">💡 提示：滚轮缩放 / 拖拽平移 / 点击节点</div>
+            <div id="syntaxTree"></div>
+        </div>
+    </div>
+
+    <script>
+        class SemanticNode {
+            constructor(label, value, type) {
+                this.id = null;
+                this.label = label;
+                this.value = value;
+                this.type = type;
+                this.children = [];
+                this.semantics = {
+                    head: "", body: "", headSource: "", bodySource: "", headOrigin: "", bodyOrigin: ""
+                };
+            }
+        }
+
+        function tokenize(input) {
+            const tokens = [];
+            let i = 0;
+
+            while (i < input.length) {
+                // 记录当前索引，用于生成唯一的ID
+                const start = i;
+
+                if (input.startsWith('猫头鹰', i)) {
+                    tokens.push({ type: 'B', value: '猫头鹰', index: start });
+                    i += 3;
+                } else if (input.startsWith('猫', i)) {
+                    tokens.push({ type: 'B', value: '猫', index: start });
+                    i += 1;
+                } else if (input.startsWith('鹰', i)) {
+                    tokens.push({ type: 'B', value: '鹰', index: start });
+                    i += 1;
+                } else if (input.startsWith('头', i)) {
+                    tokens.push({ type: 'H', value: '头', index: start });
+                    i += 1;
+                } else {
+                    // --- 核心改动：遇到不认识的字，标记为 UNKNOWN，不报错 ---
+                    const char = input[i];
+                    tokens.push({ type: 'UNKNOWN', value: char, index: start });
+                    i += 1; // 继续读取下一个字符
+                }
+            }
+
+            return tokens;
+        }
+
+        function deriveSemantics(node) {
+            if (node.children.length === 0) {
+                switch(node.value) {
+                    case "猫":
+                        node.semantics = { head: "猫", body: "猫", headSource: "猫自身", bodySource: "猫自身", headOrigin: "猫", bodyOrigin: "猫" };
+                        break;
+                    case "鹰":
+                        node.semantics = { head: "鹰", body: "鹰", headSource: "鹰自身", bodySource: "鹰自身", headOrigin: "鹰", bodyOrigin: "鹰" };
+                        break;
+                    case "猫头鹰":
+                        node.semantics = { head: "猫头鹰", body: "猫头鹰", headSource: "猫头鹰自身", bodySource: "猫头鹰自身", headOrigin: "猫头鹰", bodyOrigin: "猫头鹰" };
+                        break;
+                }
+            } else {
+                const left = node.children[0];
+                const right = node.children[2];
+                deriveSemantics(left);
+                deriveSemantics(right);
+                // 核心语义规则：头继承左边，身继承右边
+                node.semantics = {
+                    head: left.semantics.head,
+                    body: right.semantics.body,
+                    headSource: left.value,
+                    bodySource: right.value,
+                    headOrigin: left.semantics.headOrigin,
+                    bodyOrigin: right.semantics.bodyOrigin
+                };
+            }
+            return node.semantics;
+        }
+
+        class Parser {
+            constructor(tokens) {
+                this.tokens = tokens;
+                this.position = 0;
+                this.nodes = [];
+                this.nextId = 1;
+            }
+
+            get currentToken() {
+                return this.position < this.tokens.length ? this.tokens[this.position] : null;
+            }
+
+            getNodes() {
+                return this.nodes;
+            }
+
+            consume(expectedType) {
+                if (!this.currentToken) {
+                    const error = new Error(`语法错误: 语句未完成，期望输入 ${expectedType}`);
+                    error.type = 'EOF';
+                    throw error;
+                }
+
+                // --- 核心改动：如果遇到 UNKNOWN，抛出特定错误 ---
+                if (this.currentToken.type === 'UNKNOWN') {
+                    const token = this.currentToken;
+                    const error = new Error(`语法错误: 无法识别的字符: "${token.value}"`);
+                    error.token = token; // 把坏掉的 token 传出去
+                    error.type = 'UNKNOWN_TOKEN';
+                    this.position++; // 假装消费掉，避免死循环（虽然这里会throw出去）
+                    throw error;
+                }
+
+                // 类型匹配
+                if (this.currentToken.type === expectedType) {
+                    const token = this.currentToken;
+                    this.position++;
+                    return token;
+                }
+
+                // 类型不匹配 (例如: 期望 B 却来了 H)
+                const error = new Error(`语法错误: 期望 ${expectedType}，但遇到 "${this.currentToken.value}"`);
+                error.token = this.currentToken;
+                error.type = 'MISMATCH';
+                throw error;
+            }
+
+            parseB() {
+                const token = this.consume('B');
+                const node = new SemanticNode(`B: ${token.value}`, token.value, 'B');
+                node.id = this.nextId++;
+                this.nodes.push(node);
+                return node;
+            }
+
+            parseN() {
+                let left = this.parseB();
+
+                while (this.currentToken && (this.currentToken.type === 'H' || this.currentToken.type === 'UNKNOWN')) {
+                    // 如果是 UNKNOWN，consume('H') 会触发错误，被外层捕获
+                    const hToken = this.consume('H');
+
+                    const hNode = new SemanticNode(`H: ${hToken.value}`, hToken.value, 'H');
+                    hNode.id = this.nextId++;
+                    this.nodes.push(hNode);
+
+                    const right = this.parseB();
+
+                    const node = new SemanticNode(
+                        `N: ${left.value}头${right.value}`,
+                        left.value + '头' + right.value,
+                        'N'
+                    );
+                    node.id = this.nextId++;
+                    node.children = [left, hNode, right];
+                    this.nodes.push(node);
+                    left = node;
+                }
+                return left;
+            }
+
+            parse() {
+                const root = this.parseN();
+                // 检查剩余部分
+                if (this.position < this.tokens.length) {
+                    // 如果剩下的是 UNKNOWN，或者多余的有效 Token
+                    const token = this.currentToken;
+                    const msg = token.type === 'UNKNOWN' ?
+                        `无法识别的字符: "${token.value}"` :
+                        `意外的多余内容: "${token.value}"`;
+
+                    const error = new Error(msg);
+                    error.token = token;
+                    error.type = 'EXTRA';
+                    throw error;
+                }
+                deriveSemantics(root);
+                return root;
+            }
+        }
+
+        function parseInput() {
+            const input = document.getElementById('inputText').value.trim();
+            const messageDiv = document.getElementById('message');
+            const derivationDiv = document.getElementById('derivation');
+            const semanticResult = document.getElementById('semanticResult');
+
+            messageDiv.innerHTML = '';
+            derivationDiv.innerHTML = '';
+            semanticResult.style.display = 'none';
+
+            let parser = null;
+            let nodes = [];
+
+            try {
+                if (!input) throw new Error("请输入内容");
+
+                const tokens = tokenize(input); // 这一步现在永远不会报错了
+                parser = new Parser(tokens);
+
+                const root = parser.parse();
+                nodes = parser.getNodes();
+
+                // --- 成功 ---
+                messageDiv.innerHTML = `<div class="success">✅ 解析成功</div>`;
+                displaySemanticResult(root, input);
+
+                // 显示推导
+                let derivation = '<ol>';
+                nodes.forEach(node => {
+                    if (node.type === 'N' && node.children.length > 0) derivation += `<li>N → N H B → ${node.label.split(':')[1]}</li>`;
+                    else if (node.type === 'B') derivation += `<li>B → ${node.label.split(':')[1]}</li>`;
+                });
+                derivation += '</ol>';
+                derivationDiv.innerHTML = derivation;
+
+                visualizeTree(nodes);
+
+            } catch (error) {
+                // --- 错误可视化处理 ---
+                console.error(error);
+
+                // 显示错误消息
+                messageDiv.innerHTML = `<div class="error">❌ ${error.message}</div>`;
+
+                if (parser) {
+                    // 1. 获取已经成功解析的节点
+                    nodes = parser.getNodes();
+
+                    // 2. 如果错误包含 token 信息，创建一个“错误节点”
+                    if (error.token) {
+                        nodes.push({
+                            id: `error_${error.token.index}`, // 唯一ID
+                            label: `${error.message}`, // 显示出错的字
+                            type: 'ERROR',
+                            value: error.token.value,
+                            title: error.message // 鼠标悬停显示原因
+                        });
+
+                        // 3. (可选) 把错误节点后面的所有剩余 Token 也画出来，显示为灰色
+                        // 这样用户能看到整个句子哪里断了，后面还有什么
+                        const currentIdx = parser.tokens.indexOf(error.token);
+                        if (currentIdx !== -1) {
+                            for (let i = currentIdx + 1; i < parser.tokens.length; i++) {
+                                const t = parser.tokens[i];
+                                nodes.push({
+                                    id: `skip_${t.index}`,
+                                    label: t.value,
+                                    type: 'SKIPPED', // 新类型：被跳过的
+                                    value: t.value
+                                });
+                            }
+                        }
+                    } else if (error.type === 'EOF') {
+                        // 如果是语句未完成，画一个问号节点
+                        nodes.push({
+                            id: 'eof_node',
+                            label: `${error.message}`,
+                            type: 'ERROR',
+                            title: '期待更多输入'
+                        });
+                    }
+
+                    // 渲染包含错误节点的树
+                    visualizeTree(nodes);
+                } else {
+                    document.getElementById('syntaxTree').innerHTML = '';
+                }
+            }
+        }
+
+        function displaySemanticResult(root, input) {
+            const semanticResult = document.getElementById('semanticResult');
+            const semantics = root.semantics;
+
+            document.getElementById('headValue').textContent = semantics.head;
+            document.getElementById('bodyValue').textContent = semantics.body;
+            document.getElementById('headSource').textContent = semantics.headSource;
+            document.getElementById('bodySource').textContent = semantics.bodySource;
+
+            let explanation = `<div style="margin-top:5px"><strong>合成逻辑：</strong></div>`;
+            explanation += `<ul>`;
+            explanation += `<li>头部继承自最左侧的：${semantics.headOrigin}</li>`;
+            explanation += `<li>身体继承自最右侧的：${semantics.bodyOrigin}</li>`;
+            explanation += `</ul>`;
+
+            document.getElementById('semanticExplanation').innerHTML = explanation;
+            semanticResult.style.display = 'block';
+        }
+
+        function visualizeTree(nodes) {
+            const container = document.getElementById('syntaxTree');
+            container.innerHTML = '';
+            const visNodes = new vis.DataSet();
+            const visEdges = new vis.DataSet();
+
+            const existingIds = new Set(nodes.map(n => n.id));
+
+            nodes.forEach(node => {
+                let color = '#E3F2FD';
+                let fontColor = '#333';
+                let shape = 'box';
+                let label = node.label;
+                let borderDashes = false;
+
+                // --- 样式定义 ---
+                if (node.type === 'ERROR') {
+                    color = '#FFEBEE';       // 浅红背景
+                    fontColor = '#D32F2F';   // 深红文字
+                    label = node.label;      // 直接显示带❌的标签
+                    shape = 'box';
+                }
+                else if (node.type === 'SKIPPED') {
+                    color = '#F5F5F5';       // 浅灰背景
+                    fontColor = '#999';      // 灰色文字
+                    borderDashes = true;     // 虚线边框
+                    label = node.value;
+                }
+                else if (node.type === 'B') {
+                    color = '#C8E6C9';
+                    label = node.label.includes(':') ? node.label.split(':')[1].trim() : node.label;
+                }
+                else if (node.type === 'N') {
+                    if (node.semantics && node.semantics.head) {
+                        color = '#FFF9C4';
+                        let val = node.value;
+                        if(val.length > 10) val = val.substring(0,8) + '..';
+                        label = val + `\n[头:${node.semantics.head}]`;
+                    }
+                }
+                else if (node.type === 'H') {
+                    color = '#F5F5F5';
+                    label = '头';
+                }
+
+                visNodes.add({
+                    id: node.id,
+                    label: label,
+                    shape: shape,
+                    color: {
+                        background: color,
+                        border: node.type === 'ERROR' ? '#D32F2F' : '#999'
+                    },
+                    shapeProperties: { borderDashes: borderDashes }, // 虚线支持
+                    font: { multi: true, size: 14, color: fontColor },
+                    shadow: true,
+                    title: node.title || node.value // Tooltip
+                });
+
+                // 只有正常的节点才有连线
+                if (node.children) {
+                    node.children.forEach(child => {
+                        if (existingIds.has(child.id)) {
+                            visEdges.add({ from: node.id, to: child.id, arrows: 'to', color: {color:'#ccc'} });
+                        }
+                    });
+                }
+            });
+
+            // 这里有个小技巧：为了让错误节点好看，我们可以尝试把 Error 节点和最近的一个节点连一条红色的虚线
+            // 但简单的做法是让它们自然排列，Vis.js 会自动处理
+
+            // 如果存在 ERROR 节点，查找是否可以连接到最后的有效节点（可选优化）
+            // 简单起见，我们不加额外的边，让错误节点浮动在旁边即可
+
+            const data = { nodes: visNodes, edges: visEdges };
+            const options = {
+                layout: {
+                    hierarchical: {
+                        direction: 'UD',
+                        sortMethod: 'directed',
+                        levelSeparation: 100,
+                        nodeSpacing: 150,
+                        blockShifting: true,
+                        edgeMinimization: true,
+                        parentCentralization: true
+                    }
+                },
+                physics: false,
+                interaction: { dragNodes: true, zoomView: true, dragView: true }
+            };
+            new vis.Network(container, data, options);
+        }
+
+        function showRandomExample() {
+            // 扁平化的所有示例库，用于随机抽取
+            const allSamples = [
+                // 基础
+                '猫', '鹰', '猫头鹰',
+                // 简单
+                '鹰头猫', '猫头鹰头猫', '猫头猫', '鹰头鹰',
+                // 中等
+                '猫头猫头鹰', '鹰头猫头鹰', '猫头鹰头鹰', '鹰头鹰头猫',
+                // 复杂
+                '猫头鹰头猫头鹰', '鹰头猫头鹰头猫', '猫头鹰头鹰头猫头猫',
+                // 变态
+                '猫头猫头猫头猫头鹰',
+                '鹰头鹰头鹰头鹰头猫',
+                '猫头鹰头猫头鹰头猫头鹰头猫头鹰',
+                '鹰头猫头鹰头猫头鹰头猫头鹰头猫头鹰'
+            ];
+
+            const randomExample = allSamples[Math.floor(Math.random() * allSamples.length)];
+            document.getElementById('inputText').value = randomExample;
+            parseInput();
+        }
+
+        function showAllExamples() {
+            const categories = {
+                '🐣 基础生物 (原子)': [
+                    '猫',
+                    '鹰',
+                    '猫头鹰'
+                ],
+                '🧪 初级合成 (入门)': [
+                    '鹰头猫',
+                    '猫头鹰头猫',
+                    '猫头猫',
+                    '鹰头鹰头鹰'
+                ],
+                '🔄 递归循环 (套娃)': [
+                    '猫头猫头猫头猫',
+                    '鹰头鹰头鹰头鹰',
+                    '猫头鹰头鹰头鹰头鹰',
+                    '猫头鹰头猫头鹰',
+                    '鹰头猫头鹰头猫',
+                    '猫头鹰头鹰头猫头猫',
+                    '猫头鹰头猫头鹰头猫头鹰头猫',
+                    '鹰头鹰头猫头猫头鹰头鹰头猫',
+                    '猫头鹰头猫头鹰头猫头鹰头猫头鹰头猫'
+                ],
+                '🐛 错误演示 (可视化测试)': [
+                    '猫头',          // ❌ 语句未完成
+                    '猫头狗',        // ❌ 未知字符 "狗"
+                    '猫头X鹰',       // ❌ 中间包含非法字符
+                    '猫头鹰猫',      // ❌ 结尾多余成分
+                    '头猫'           // ❌ 错误的开头
+                ]
+            };
+
+            let html = '<div style="margin-top:10px">';
+            for (const [category, examples] of Object.entries(categories)) {
+                html += `<div class="category-title">${category}:</div>`;
+                html += '<div class="examples-grid">';
+                html += examples.map(exp =>
+                    `<button class="example-btn" onclick="document.getElementById('inputText').value='${exp}'; parseInput()">${exp}</button>`
+                ).join('');
+                html += '</div>';
+            }
+            html += '</div>';
+            document.getElementById('message').innerHTML = html;
+        }
+
+        // 初始化
+        window.onload = function() { parseInput(); };
+    </script>
+</body>
+</html>
